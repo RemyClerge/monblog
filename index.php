@@ -1,14 +1,21 @@
 <?php
-    require 'Modele.php';
-    try {
-    $billets = getBillets();
-    // Affichage
-    $contenu = 'vueAccueil.php';
-    require 'gabarit.php';
-    } catch (Exception $e) {
-        $msgErreur = $e->getMessage();
-	$contenu = 'vueErreur.php' ;
-	require 'gabarit.php' ;
+    require 'Controleur.php';
+
+    try{
+        if(isset($_GET['action'])){
+            if ($_GET['action'] == 'billet') {
+                $idBillet = $_GET['id'];
+                unBillet($idBillet);
+            }else {
+                //une autre action demandée
+                erreur("Action non valide");
+            }
+        }else {
+            //pas d'action demandée : affichage par défaut
+            accueil();
+        }
+    }catch (Exception $e){
+        erreur($e->getMessage());
     }
 ?>
 
